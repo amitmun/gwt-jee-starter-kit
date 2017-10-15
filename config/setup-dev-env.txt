@@ -1,0 +1,101 @@
+This manual is for setting up a Windows development machine since most of the organization I know work with Windows.
+
+Install Oracle JDK (version 8u144):
+	Download and install Oracle JDK 8: http://www.oracle.com/technetwork/java/javase/downloads/index.html
+	Set "JAVA_HOME" environment variable to the JDK installation folder (e.g. C:\Program Files\Java\jdk1.8.0_144)
+	??? Add the JDK installation bin folder to the "Path" environment variable (e.g. C:\Program Files\Java\jdk1.8.0_144\bin) ???
+	Confirm Java installation by executing "java -version" in command line
+
+Install Apache Maven (version 3.5.0):
+	Download Apache Maven ZIP file: https://maven.apache.org/download.cgi
+	Extract Maven ZIP file to C:\dev\maven
+	Add Maven installation bin folder to the "Path" environment variable (C:\dev\maven\bin)
+	Confirm Maven installation by executing "mvn -v" in command line
+
+Build Projects:
+	cd /d C:\dev\git\gwt-jee-starter-kit\projects
+	mvn clean install
+
+Install GitHub Desktop (version 1.0.4):
+	This installation is OPTIONAL - you may use instead any Git client to clone the repository
+	Download and install GitHub Desktop: https://desktop.github.com/
+	Clone gwt-jee-starter-kit GitHub repository into C:\dev\git\gwt-jee-starter-kit
+
+Install Atom Editor (version v1.21.1):
+	This installation is OPTIONAL - you may use instead your favorite text editor
+	Download and install Atom Editor: https://atom.io/
+
+Install Eclipse IDE for Java EE Developers (version Oxygen 1a):
+	Download Eclipse ZIP file: https://www.eclipse.org/downloads/eclipse-packages/
+	Extract Eclipse ZIP file to C:\dev\eclipse
+	Copy %userprofile%\.m2\repository\org\projectlombok\lombok\1.16.18\lombok-1.16.18.jar to C:\dev\eclipse
+	Open the eclipse.ini file in text editor and add the following line after the -vmargs line:
+		-javaagent:lombok-1.16.18.jar
+	Start your Eclipse and choose workspace C:\dev\eclipse-workspace\gwt-jee-starter-kit
+	Install GWT Eclipse Plugin (version 3.0.0):
+		Help -> Eclipse Marketplace -> GWT Eclipse Plugin
+		Install only GWT Eclipse Plugin and JavaScript Debugger (exclude GWT SDKs that are included in the plugin)
+	Install JRebel for Eclipse plugin (version 7.1.0):
+		This installation is OPTIONAL - JRebel requires purchasing a license
+		Help -> Eclipse Marketplace -> JRebel for Eclipse
+
+Configure Eclipse (Window -> Preferences):
+	Path																		Parameter																Value
+	=======================================================================================================================================
+	General																			Show Heap Status																																	On
+	General -> Content Types -> Text ->					Default Encoding																																	UTF-8 + Update
+		Java Properties File
+	General -> Content Types -> Text -> JSP			Default Encoding																																	UTF-8 + Update
+	General -> Editors -> Text Editors ->				Use this reference source																													A Git Revision
+		Quick Diff
+	General -> Workspace ->											Other																																							UTF-8
+		Text File Encoding
+	Java -> Code Style -> Formatter -> Edit			Profile name																																			GWT
+																							New Lines -> in empty class body																									Off ???
+																							Line Wrapping -> Maximum line width																								150
+																							Comments -> Maximum width for comments																						150
+	Java -> Compiler -> Errors/Warnings					Code Style -> Undocumented empty block																						Warning
+																							Potential programming problems -> Possible accidental boolean assignment					Warning
+																							Potential programming problems -> Empty statement																	Warning
+																							Potential programming problems -> Potential Resource Leak													Warning
+																							Name shadowing and conflicts -> Field declaration hides another field or variable	Warning
+																							Unnecessary code -> Value of method parameter is not used													Warning
+																							Unnecessary code -> Unnecessary cast or 'instance of' operation										Warning
+																							Unnecessary code -> Unnecessary declaration of thrown exception										Warning
+																							Unnecessary code -> Redundant super interface																			Warning
+																							Annotations -> Missing '@Override' annotation																			Warning
+																							Annotations -> Missing '@Deprecated' annotation																		Warning
+																							Null Analysis -> Potential null pointer access																		Warning
+																							Null Analysis -> Redundant null check																							Warning
+	Java -> Editor -> Content Assist						Insertion -> Completion overwrites																								On
+	Java -> Editor -> Save Actions							Perform the selected actions on save -> Format source code												Format all lines
+	Java -> Editor -> Typing										Automatically insert at correct position -> Semicolons														On
+	Java Persistence -> JPA -> Errors/Warnings	Project -> No connection specified for project																		Ignore
+																							Project -> No persistence.xml file found in project																Ignore
+	JavaScript -> Code Style -> Formatter -> Edit	Profile name																																			GWT
+																							Line Wrapping -> Maximum line width																								150
+																							Comments -> Maximum line width for comments																				150
+	Maven -> User Interface											Open XML page in the POM editor by default																				On
+	Web -> HTML Files -> Editor									Line width																																				150
+	Web -> HTML Files -> Validation							Ignore specific element names in validation																				paper-*,dom-module,template
+																							Attributes -> Undefined attribute name																						Ignore
+																																																																(Required since Eclipse does not validate Web Components attributes well)
+	XML -> XML Files -> Editor									Line width																																				150
+
+Install Apache TomEE Plus (version 7.0.4):
+	Download Apache TomEE Plus ZIP file: http://tomee.apache.org/download-ng.html
+	Extract Apache TomEE Plus ZIP file to C:\dev\tomee\gwt-jee-starter-kit
+
+Create TomEE server in Eclipse:
+	Window -> Preferences -> Server -> Runtime Environments -> Add…
+		Apache Tomcat v8.5
+		Name: tomee
+		Tomcat installation directory: C:\dev\tomee\gwt-jee-starter-kit
+	Servers -> Right Click -> New -> Server -> Apache Tomcat v8.5
+		Server name: tomee
+		Server runtime environment: tomee
+	Double-click tomee server and select Server Locations -> Use Tomcat installation
+
+Import Projects:
+	File -> Import... -> Existing Projects into Workspace -> Root directory: C:\dev\git\gwt-jee-starter-kit\projects
+	Mark /Web/src/main/webapp/Client as Derived in Project Properties
